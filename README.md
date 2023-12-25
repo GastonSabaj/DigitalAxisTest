@@ -4,8 +4,11 @@ git clone -b master https://github.com/GastonSabaj/DigitalAxisTest.git
 Una vez clonado el proyecto, se debe pararse sobre la carpeta de DigitalAxisTest, y ejecutar el comando "symfony server:start". Este mismo comando aportará una ruta "localhost:8000", el cual será el dominio del proyecto.
 Para la conexión a la base de datos, se deberá entrar a PostgreSQL y crear la base de datos de la siguiente manera:
 CREATE USER gaston WITH PASSWORD '123';
+
 ALTER USER gaston WITH SUPERUSER;
+
 CREATE DATABASE digitalAxisDatabase;
+
 GRANT ALL PRIIVLEGES ON DATABASE digitalAxisDatabase TO gaston;
 
 
