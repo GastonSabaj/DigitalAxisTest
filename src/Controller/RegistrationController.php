@@ -21,6 +21,19 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $emailSubmitted = $form->get('email')->getData();
+
+            // Verify if the email sent already exist in the User table
+            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $emailSubmitted]);
+            
+            //If a user match the email sent, then i must report the error and refresh de page
+            if ($existingUser) {
+                $this->addFlash('danger', 'This email is already registered!');
+                return $this->redirectToRoute('app_register');
+            }
+
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -33,7 +46,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_product');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

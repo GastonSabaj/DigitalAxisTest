@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    <header>
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <form class="form-inline">
+                <a
+                        class="btn btn-secondary"
+                        href="{{ path('app_product_index') }}"
+                        @click="isOpen = false">
+                    Home
+                </a>
+                <a
+                        class="btn btn-secondary"
+                        href="/{{ app.user ? 'logout' : 'login' }}"
+                        @click="isOpen = false">
+                        {{ app.user ? 'Logout' : 'Login' }}
+                </a>
+            </form>
+        </nav>                
+</header>
+{% endblock %}

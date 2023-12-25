@@ -31,7 +31,7 @@ class ProductType extends AbstractType
                     new Length(["min" => 1, "max" => 250])
                 ]
             ])
-            ->add('description')
+            ->add('description', TextType::class)
         ;
     }
 
