@@ -25,6 +25,7 @@ Requerimientos:
 - PHP 8.1.18
 
 Se requerirán ejecutar los siguientes comandos:
+- composer install
 - composer require doctrine/dbal
 - composer require symfony/maker-bundle --dev
 - composer require security
