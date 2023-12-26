@@ -65,7 +65,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    #[Route('/{Sku}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product = null): Response
     {
         // Get the security service

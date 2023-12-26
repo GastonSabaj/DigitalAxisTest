@@ -1,28 +1,48 @@
 {{ form_start(form) }}
-    {# {{ form_widget(form) }} #}
-
     <div class="container-fluid">
         <br>
-            <div class="row mb-3">
-                <div class="col-sm-4">
-                    {{form_row(form.Sku)}}
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    {{ form_label(form.Sku) }}
+                    {{ form_widget(form.Sku, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.Sku) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.Sku)|striptags|trim }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-sm-4">
-                    {{form_row(form.product_name)}}
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    {{ form_label(form.product_name) }}
+                    {{ form_widget(form.product_name, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.product_name) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.product_name)|striptags|trim }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-sm-4">
-                    {{form_row(form.description)}}
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.description) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.description)|striptags|trim }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-    
+        </div>
 
         <br>
         <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
         <a class="btn btn-secondary" href="{{ path('app_product_index') }}">Back to list</a>
     </div>
-
 {{ form_end(form) }}
