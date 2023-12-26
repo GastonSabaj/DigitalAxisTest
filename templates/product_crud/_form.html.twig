@@ -1,7 +1,28 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <br>
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-    <a class="btn btn-secondary" href="{{ path('app_product_index') }}">Back to list</a>
+    {# {{ form_widget(form) }} #}
+
+    <div class="container-fluid">
+        <br>
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    {{form_row(form.Sku)}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    {{form_row(form.product_name)}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    {{form_row(form.description)}}
+                </div>
+            </div>
+    
+
+        <br>
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        <a class="btn btn-secondary" href="{{ path('app_product_index') }}">Back to list</a>
+    </div>
 
 {{ form_end(form) }}
