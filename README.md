@@ -11,7 +11,7 @@ CREATE DATABASE digitalAxisDatabase;
 
 GRANT ALL PRIIVLEGES ON DATABASE digitalAxisDatabase TO gaston;
 
-
+  Luego hay que tirar el comando "php bin/console doctrine:schema:update --force" para crear (aunque se suele usar para actualizar) las tablas en la base de datos.
   
   Para navegar por las páginas, primeramente se debe logear, por lo tanto la primera página al cual se debe dirigir es: "localhost:8000/login". En caso de no tener un usuario creado, se puede apretár el botón de "You don't have an account? register here!", y te llevará a la página para registrar un usuario nuevo.
   Una vez creado el usuario, se redirigá a la página de login para finalmente logear a nuestra aplicación.
