@@ -31,5 +31,46 @@ Se requerirán ejecutar los siguientes comandos:
 - composer require security
 - composer require orm
 - composer require form  validator twig-bundle
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+
+
+To run the application locally, you need to first clone the repository wherever you prefer. You can use the following command:
+git clone -b EjercicioDigitalAxis https://github.com/GastonSabaj/DigitalAxisTest.git
+
+Once the project is cloned, navigate to the DigitalAxisTest folder and execute the command "symfony server:start." This command will provide a URL "localhost:8000," which will be the project's domain.
+For the database connection, you should access PostgreSQL and create the database as follows:
+CREATE USER gaston WITH PASSWORD '123';
+
+ALTER USER gaston WITH SUPERUSER;
+
+CREATE DATABASE digitalAxisDatabase;
+
+GRANT ALL PRIVILEGES ON DATABASE digitalAxisDatabase TO gaston;
+
+Then run the command "php bin/console doctrine:schema:update --force" to create (although it is commonly used to update) the tables in the database.
+
+To navigate through the pages, you must first log in. Therefore, the initial page to visit is: "localhost:8000/login." If you don't have a user created, you can click the "You don't have an account? register here!" button, which will take you to the page to register a new user.
+Once the user is created, you will be redirected to the login page to finally log in to our application.
+Finally, when inside the application, you will have a product listing page, where you can add products to the list ("Create a new product"), view the data ("Show"), edit the data ("Edit"), and delete the row. If desired, you can also log out of the application by redirecting to the login page.
+
+Note: For security reasons, the project's pages are protected against unauthenticated users. Therefore, if attempting to access a route without prior login, it will redirect to a page indicating the need to log in.
+
+Requirements:
+- Symfony 5.5.1
+- PHP 8.1.18
+
+The following commands need to be executed:
+- composer install
+- composer require doctrine/dbal
+- composer require symfony/maker-bundle --dev
+- composer require security
+- composer require orm
+- composer require form validator twig-bundle
+
 
   

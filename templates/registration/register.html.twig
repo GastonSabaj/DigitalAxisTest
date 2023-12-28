@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %}Register{% endblock %} #}
-
 {% block body %}
 
     {# Show success messages #}
@@ -23,30 +21,34 @@
             <div class="col-md-6">
                 <h1> <i class="fa fa-user-plus" aria-hidden="true"></i> Register a new account</h1>
 
-                {{ form_errors(registrationForm) }}
-
                 {{ form_start(registrationForm) }}
                 <div class="row mb-3">
                     <div class="col-sm-4">
-                        {{form_row(registrationForm.email)}}
+                        {{ form_label(registrationForm.email) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(registrationForm.email) %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form_errors(registrationForm.email)|striptags|trim }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4">
-                        {{form_row(registrationForm.plainPassword)}}
+                        {{ form_label(registrationForm.plainPassword) }}
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(registrationForm.plainPassword) %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form_errors(registrationForm.plainPassword)|striptags|trim }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-                    {# {{ form_row(registrationForm.email) }}
-                    <br>
-                    {{ form_row(registrationForm.plainPassword) }} #}
-                    <br>
-                    <button class="btn btn-lg btn-primary" type="submit">Register</button>
-                    <a class="btn btn-lg btn-secondary" href="{{ path('app_login') }}">Back to log in</a>
+                <br>
+                <button class="btn btn-lg btn-primary" type="submit">Register</button>
+                <a class="btn btn-lg btn-secondary" href="{{ path('app_login') }}">Back to log in</a>
                 {{ form_end(registrationForm) }}
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}
