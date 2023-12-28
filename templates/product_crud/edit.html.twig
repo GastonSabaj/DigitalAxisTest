@@ -2,7 +2,7 @@
 
 {% block body %}
     <title>{% block title %}Edit product{% endblock %}</title>
-    <h1>Edit Product</h1>
+    <h1> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Product</h1>
 
     {{ include('product_crud/_form.html.twig', {'button_label': 'Update'}) }}
 

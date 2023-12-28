@@ -18,14 +18,9 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
-        // Get the security service
-        $securityChecker = $this->container->get('security.authorization_checker');
-
-        // Check if the user is authenticated
-        if (!$securityChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // If its not, redirect to 'required_loggin' page
+        if (!$this->checkAuthentication()) {
             return $this->redirectToRoute('required_loggin');
-        }      
+        }
 
         return $this->render('product_crud/index.html.twig', [
             'products' => $productRepository->findAll(),
@@ -35,26 +30,20 @@ class ProductController extends AbstractController
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Get the security service
-        $securityChecker = $this->container->get('security.authorization_checker');
-
-        // Check if the user is authenticated
-        if (!$securityChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // If its not, redirect to 'required_loggin' page
+        if (!$this->checkAuthentication()) {
             return $this->redirectToRoute('required_loggin');
-        }    
-        
+        }
+
         $product = new Product();
         $product->setCreatedAt(new DateTimeImmutable());
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success','A new product has been created successfully!');
+            $this->addFlash('success', 'A new product has been created successfully!');
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -68,18 +57,12 @@ class ProductController extends AbstractController
     #[Route('/{Sku}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product = null): Response
     {
-        // Get the security service
-        $securityChecker = $this->container->get('security.authorization_checker');
-
-        // Check if the user is authenticated
-        if (!$securityChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // If its not, redirect to 'required_loggin' page
+        if (!$this->checkAuthentication()) {
             return $this->redirectToRoute('required_loggin');
-        } 
+        }
 
-        // Check if the injected ID value passed throughx the URL corresponds to an existing product
-        if(!$product){
-            $this->addFlash('danger','Product not found!');
+        if (!$product) {
+            $this->addFlash('danger', 'Product not found!');
             return $this->redirectToRoute('app_product_index');
         }
 
@@ -91,18 +74,12 @@ class ProductController extends AbstractController
     #[Route('/{Sku}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product = null, EntityManagerInterface $entityManager): Response
     {
-        // Get the security service
-        $securityChecker = $this->container->get('security.authorization_checker');
-
-        // Check if the user is authenticated
-        if (!$securityChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // If its not, redirect to 'required_loggin' page
+        if (!$this->checkAuthentication()) {
             return $this->redirectToRoute('required_loggin');
-        }    
+        }
 
-        // Check if the injected Sku value passed through the URL corresponds to an existing product
-        if(!$product){
-            $sku = $request->attributes->get('Sku'); // Obtener el SKU de la solicitud
+        if (!$product) {
+            $sku = $request->attributes->get('Sku');
             $this->addFlash('danger', sprintf('The product of SKU "%s" does not match with an existent product!', $sku));
             return $this->redirectToRoute('app_product_index');
         }
@@ -114,7 +91,7 @@ class ProductController extends AbstractController
             $product->setUpdateAt(new DateTimeImmutable());
             $entityManager->flush();
 
-            $this->addFlash('success','A product has been edited successfully!');
+            $this->addFlash('success', 'A product has been edited successfully!');
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -128,22 +105,24 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        // Get the security service
-        $securityChecker = $this->container->get('security.authorization_checker');
-
-        // Check if the user is authenticated
-        if (!$securityChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // If its not, redirect to 'required_loggin' page
+        if (!$this->checkAuthentication()) {
             return $this->redirectToRoute('required_loggin');
-        }    
+        }
 
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
         }
 
-        $this->addFlash('success','A product has been deleted successfully!');
+        $this->addFlash('success', 'A product has been deleted successfully!');
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    private function checkAuthentication(): bool
+    {
+        $securityChecker = $this->container->get('security.authorization_checker');
+    
+        return $securityChecker->isGranted('IS_AUTHENTICATED_FULLY');
+    }
+    
 }
